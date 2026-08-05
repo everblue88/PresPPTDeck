@@ -1,0 +1,21 @@
+name: PresPPTDeck
+version: 0.1.0
+description: AI business presentation consultant skill
+
+category:
+  - productivity
+  - presentation
+  - business
+
+capabilities:
+  - business_analysis
+  - presentation_design
+  - ppt_structure
+  - presentation_coaching
+
+workflow:
+  - discovery
+  - framework
+  - design
+  - generation
+  - review
