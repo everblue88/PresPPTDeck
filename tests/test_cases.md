@@ -1,159 +1,138 @@
-# PresPPTDeck 测试用例
+# PresPPTDeck V0.3 测试用例
 
-> 用于验证12步方法论和PPT生成器的功能完整性。
+> 验证 AI商业汇报架构师 的核心能力。
 
 ---
 
-## 测试用例 1：基础功能测试
+## 测试用例 1：极简输入测试（★ V0.3 核心差异化）
 
 ### 输入
 ```
-用户：帮我做一个Q2工作汇报PPT，给部门总监看。
+用户：帮我做一个AI赋能金融产研的汇报，给老板看。
 ```
 
 ### 期望行为
-1. AI不直接生成PPT，而是先引导用户明确汇报对象
-2. 确认对象：部门总监 → 关注业务指标和团队效率
-3. 确认目的：Q2工作总结汇报
-4. 确认核心数据：Q2的KPI完成情况
-5. 建立故事线：WHY→WHAT→HOW→RESULT→NEXT
-6. 拆解分页结构：8-10页
-7. 推荐设计风格：极简白灰
-8. 输出Markdown逻辑稿
-9. 确认输出形式：PPTX
-10. 生成PPT或提供生成结构
+1. AI 只问3个问题（对象、目的、核心输入），不追问更多细节
+2. AI 自动推断：行业=金融科技、时间=15分钟、风格=金融黑金
+3. AI 自动补全：行业背景、市场数据、竞争案例、价值逻辑
+4. 所有补全内容标注 `[行业参考]` / `[AI建议]` / `[需验证]`
+5. 用户确认方向后，AI构建6段式故事 + 10页分页规划
+6. 每页推荐 Pattern（基于 Slide Type Recognition）
 
 ### 验证点
-- [ ] Step 1-3 是否在生成内容前完成？
-- [ ] 页面标题是否有观点有态度？
-- [ ] 是否使用了五段式故事线？
-- [ ] 是否推荐了匹配的设计风格？
+- [ ] 是否只问了3个问题？
+- [ ] 是否自动补全了行业背景？
+- [ ] 是否标注了AI补全的内容？
+- [ ] 是否生成了6段式故事线？
+- [ ] 是否推荐了匹配的Pattern？
 
 ---
 
-## 测试用例 2：年度述职场景
+## 测试用例 2：Content Expansion 引擎测试
 
 ### 输入
 ```
-用户：我是高级工程师，今年主导了3个核心项目，要准备晋升述职PPT。
-目标听众：技术总监 + 技术VP + HRBP
+用户输入：今年做了APP，想汇报成果
 ```
 
-### 期望行为
-1. 识别混合角色场景（技术+人力）
-2. 分别分析三方的关注点
-3. 目的：晋升述职（高级工程师 → 技术专家）
-4. 核心信息：展示技术深度、项目影响力、团队贡献
-5. 推荐模板：年度述职模板
-6. 推荐风格：科技蓝白 或 极简白灰
+### 期望补充内容
+- [ ] 行业背景：移动互联网/金融科技行业趋势
+- [ ] 竞争案例：同行业APP案例
+- [ ] 价值逻辑：APP对业务的价值（获客/服务/付费）
+- [ ] 风险预判：用户增长、留存、变现等常见挑战
 
 ### 验证点
-- [ ] 是否识别了混合角色？
-- [ ] 是否分别分析了三方关注点？
-- [ ] 模板选择是否匹配述职场景？
-- [ ] 是否包含了"个人成长"页面？
+- [ ] 是否补充了行业背景？
+- [ ] 是否补充了价值逻辑？
+- [ ] 是否标注了补充内容的来源？
 
 ---
 
-## 测试用例 3：方案评审场景
+## 测试用例 3：视觉规则测试
+
+### 场景A：文字堆叠检测
+输入：一页有5个连续Bullet的文字列表
+期望：AI自动转换为图标卡片或其他视觉形式
+
+### 场景B：覆盖率检测
+输入：一页只有标题+2行文字（覆盖率<40%）
+期望：AI返回 Content Expansion 补全
+
+### 场景C：Page Score评分
+输入：任意一页PPT
+期望：AI输出100分制的Page Score（结构30+视觉30+密度20+统一20）
+
+### 验证点
+- [ ] 超过4个Bullet是否自动转换？
+- [ ] 覆盖率<60%是否触发补全？
+- [ ] 是否输出了Page Score？
+
+---
+
+## 测试用例 4：Pattern 自动选择测试
 
 ### 输入
-```
-用户：我们需要做一个微服务架构升级的技术方案评审PPT。
-听众：CTO + 架构师团队（5人）
-```
-
-### 期望行为
-1. 识别技术评审场景
-2. 听众关注：技术可行性、风险、投入产出
-3. 推荐模板：方案评审模板
-4. 包含：方案对比、风险评估、实施计划
-5. 推荐风格：科技蓝白
+| 内容 | 期望Pattern |
+|------|-----------|
+| "AI赋能流程" | before_after |
+| "三大战略方向" | framework |
+| "年度规划" | roadmap |
+| "核心数据" | dashboard |
+| "方案对比" | comparison |
+| "技术架构" | architecture |
+| "增长逻辑" | flywheel |
 
 ### 验证点
-- [ ] 是否包含了方案对比页面？
-- [ ] 是否包含了风险评估页面？
-- [ ] 是否包含了实施计划（时间轴）？
-- [ ] 是否准备了Q&A（如：为什么选这个方案）？
+- [ ] 是否自动识别了页面类型？
+- [ ] 是否推荐了匹配的Pattern？
 
 ---
 
-## 测试用例 4：生成器功能测试
+## 测试用例 5：生成器扩展测试
 
 ### 输入
 ```python
 from generator import PPTGenerator
 
-gen = PPTGenerator(style="tech_blue")
-gen.add_cover(title="测试PPT", subtitle="生成器测试")
-gen.add_toc([
-    {"title": "章节1", "subtitle": "描述1"},
-    {"title": "章节2", "subtitle": "描述2"},
+gen = PPTGenerator(style='tech_blue')
+gen.add_roadmap(title='路线图', phases=[
+    {'name': 'Phase 1', 'time': 'H1', 'goals': ['目标1', '目标2']},
 ])
-gen.add_content(title="核心观点", points=["要点1", "要点2", "要点3"])
-gen.add_data(title="数据展示", metrics=[
-    {"label": "指标1", "value": "85%", "trend": "↑15%", "trend_up": True},
+gen.add_process(title='流程', steps=[
+    {'name': '步骤1', 'desc': '说明'},
 ])
-gen.add_comparison(
-    title="对比展示",
-    left_points=["旧方案1", "旧方案2"],
-    right_points=["新方案1", "新方案2"],
-)
-gen.add_ending(thank_text="感谢聆听")
-gen.save("test_output.pptx")
+gen.add_timeline(title='时间轴', milestones=[
+    {'time': 'Q1', 'event': '事件', 'desc': '说明'},
+])
+gen.save('test.pptx')
 ```
 
-### 期望行为
-- 生成6页PPT文件
-- 15:9比例
-- 配色为科技蓝白
-- 无报错
-
 ### 验证点
-- [ ] 文件是否成功生成？
-- [ ] 是否包含6页幻灯片？
-- [ ] 封面页标题是否正确？
-- [ ] 数据页是否包含指标卡？
+- [ ] RoadmapSlide 是否正常生成？
+- [ ] ProcessSlide 是否正常生成？
+- [ ] TimelineSlide 是否正常生成？
+- [ ] 新增的 build_from_story() 是否正常工作？
 
 ---
 
-## 测试用例 5：风格切换测试
+## 测试用例 6：质量检查器测试
 
 ### 输入
-```python
-styles = ["tech_blue", "finance_gold", "minimal_white", "dark_tech", "vibrant_orange"]
-for style in styles:
-    gen = PPTGenerator(style=style)
-    gen.add_cover(title=style, subtitle="风格测试")
-    gen.add_ending(thank_text="测试完成")
-    gen.save(f"test_{style}.pptx")
+一份完整的11页PPT（Story Architecture）
+
+### 期望输出
+```
+【PresPPTDeck 质量报告】
+- 全局评分：故事完整性 + 内容质量 + 视觉一致性
+- 逐页评分：每页Page Score
+- 改进建议：具体问题和改进方案
+- 判定：通过 / 需优化 / 需重新设计
 ```
 
-### 期望行为
-- 5种风格各自生成不同配色的PPT
-- 深色风格（dark_tech、finance_gold）使用深色背景
-- 浅色风格使用白色背景
-
 ### 验证点
-- [ ] 5个文件是否都成功生成？
-- [ ] 深色风格的背景是否为深色？
-- [ ] 金融黑金是否使用了金色元素？
-
----
-
-## 测试用例 6：边界情况测试
-
-### 场景A：用户直接要求"帮我做个PPT"
-- 期望：AI不从，而是引导用户先回答Step 1-3的关键问题
-
-### 场景B：时间非常紧张（"5分钟后就要"）
-- 期望：简化流程但保留Step 1-3和Step 4-5，快速输出3-5页核心内容
-
-### 场景C：用户不知道听众是谁
-- 期望：AI用场景化问题帮助用户推断（"谁会根据这个PPT做决策？"）
-
-### 场景D：空内容
-- 生成器应该能处理空points、空metrics等边界情况
+- [ ] 是否输出了全局评分？
+- [ ] 是否逐页给出了Page Score？
+- [ ] 是否有具体的改进建议？
 
 ---
 
@@ -161,11 +140,11 @@ for style in styles:
 
 每次发布前必须验证：
 
-- [ ] SKILL.md 覆盖全部12步
-- [ ] 12个prompt文件都存在且格式一致
-- [ ] 5个模板的页面结构完整
-- [ ] 3个案例覆盖12步全流程
-- [ ] 生成器支持5种风格
-- [ ] 生成器支持6种页面类型
+- [ ] SKILL.md 使用4阶段引擎流程
+- [ ] core/ 3个文件都是完整文档
+- [ ] design/ 包含 style_system + visual_rules + 15 patterns + index
+- [ ] quality/ 包含完整检查器
+- [ ] 生成器支持所有页面类型（cover/content/data/comparison/ending/roadmap/process/timeline）
 - [ ] `python -m generator.ppt_generator` 能成功生成预览PPT
-- [ ] manifest.yaml 版本号正确
+- [ ] manifest.yaml 版本号为 0.3.0
+- [ ] 旧目录（prompts/assets/framework）已删除

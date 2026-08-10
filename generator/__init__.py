@@ -1,5 +1,5 @@
 # PresPPTDeck Generator
-# PPT生成器模块
+# PPT生成器模块 — V0.3
 
 from .ppt_generator import PPTGenerator
 from .templates import (
@@ -10,6 +10,9 @@ from .templates import (
     DataSlide,
     ComparisonSlide,
     EndingSlide,
+    RoadmapSlide,
+    ProcessSlide,
+    TimelineSlide,
     DESIGN_STYLES,
 )
 
@@ -22,5 +25,8 @@ __all__ = [
     "DataSlide",
     "ComparisonSlide",
     "EndingSlide",
+    "RoadmapSlide",
+    "ProcessSlide",
+    "TimelineSlide",
     "DESIGN_STYLES",
 ]

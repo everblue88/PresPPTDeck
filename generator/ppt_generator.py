@@ -32,6 +32,9 @@ from .templates import (
     DataSlide,
     ComparisonSlide,
     EndingSlide,
+    RoadmapSlide,
+    ProcessSlide,
+    TimelineSlide,
     SLIDE_WIDTH,
     SLIDE_HEIGHT,
 )
@@ -76,6 +79,9 @@ class PPTGenerator:
         self.data = DataSlide(self.style)
         self.comparison = ComparisonSlide(self.style)
         self.ending = EndingSlide(self.style)
+        self.roadmap = RoadmapSlide(self.style)
+        self.process = ProcessSlide(self.style)
+        self.timeline = TimelineSlide(self.style)
 
         # 幻灯片计数
         self.slide_count = 0
@@ -239,6 +245,163 @@ class PPTGenerator:
                 description, font_size=Pt(14), font_color_key=desc_color,
                 alignment=PP_ALIGN.CENTER
             )
+
+        return self
+
+    def add_roadmap(self, title: str, phases: list = None):
+        """
+        添加路线图页
+
+        Args:
+            title: 页面标题
+            phases: 阶段列表
+                [{"name": "Phase 1", "time": "H1 2026", "goals": ["目标1", "目标2"]}, ...]
+        """
+        slide = self._add_blank_slide()
+        self.roadmap.create(slide, title, phases, self.style_name)
+        return self
+
+    def add_process(self, title: str, steps: list = None):
+        """
+        添加流程图页
+
+        Args:
+            title: 页面标题
+            steps: 步骤列表
+                [{"name": "步骤名", "desc": "说明"}, ...]
+        """
+        slide = self._add_blank_slide()
+        self.process.create(slide, title, steps, self.style_name)
+        return self
+
+    def add_timeline(self, title: str, milestones: list = None):
+        """
+        添加时间轴页
+
+        Args:
+            title: 页面标题
+            milestones: 里程碑列表
+                [{"time": "Q1", "event": "事件名", "desc": "说明"}, ...]
+        """
+        slide = self._add_blank_slide()
+        self.timeline.create(slide, title, milestones, self.style_name)
+        return self
+
+    def build_from_story(self, story_data: dict):
+        """
+        从 Story Architect 输出直接构建完整PPT（V0.3新增）
+
+        Args:
+            story_data: Story Architecture 数据
+                {
+                    "title": "PPT标题",
+                    "subtitle": "副标题",
+                    "presenter": "汇报人",
+                    "date": "日期",
+                    "style": "tech_blue",
+                    "toc_items": [...],
+                    "slides": [
+                        {"type": "cover", ...},
+                        {"type": "summary", ...},
+                        {"type": "dashboard", "title": "...", "metrics": [...]},
+                        {"type": "before_after", "title": "...", "left_points": [...], "right_points": [...]},
+                        {"type": "comparison", ...},
+                        {"type": "roadmap", "title": "...", "phases": [...]},
+                        {"type": "process", "title": "...", "steps": [...]},
+                        {"type": "timeline", "title": "...", "milestones": [...]},
+                        {"type": "content", "title": "...", "points": [...]},
+                        {"type": "data", "title": "...", "metrics": [...]},
+                        {"type": "ending", ...},
+                    ],
+                    "ending": {"thank_text": "感谢聆听", "summary": "...", "call_to_action": "..."}
+                }
+        """
+        # 封面
+        self.add_cover(
+            title=story_data.get("title", ""),
+            subtitle=story_data.get("subtitle", ""),
+            presenter=story_data.get("presenter", ""),
+            date=story_data.get("date", ""),
+        )
+
+        # 目录
+        toc_items = story_data.get("toc_items", [])
+        if toc_items:
+            self.add_toc(toc_items)
+
+        # 内容页
+        for slide_data in story_data.get("slides", []):
+            slide_type = slide_data.get("type", "content")
+
+            if slide_type == "section":
+                self.add_section_header(
+                    title=slide_data.get("title", ""),
+                    section_num=slide_data.get("section_num"),
+                )
+            elif slide_type == "summary":
+                self.add_content(
+                    title=slide_data.get("title", ""),
+                    subtitle=slide_data.get("subtitle", ""),
+                    points=slide_data.get("points", []),
+                    visual_type="cards",
+                )
+            elif slide_type == "content":
+                self.add_content(
+                    title=slide_data.get("title", ""),
+                    subtitle=slide_data.get("subtitle", ""),
+                    points=slide_data.get("points", []),
+                    visual_type=slide_data.get("visual_type", "list"),
+                )
+            elif slide_type == "data" or slide_type == "dashboard":
+                self.add_data(
+                    title=slide_data.get("title", ""),
+                    metrics=slide_data.get("metrics", []),
+                )
+            elif slide_type == "comparison":
+                self.add_comparison(
+                    title=slide_data.get("title", ""),
+                    left_title=slide_data.get("left_title", "Before"),
+                    right_title=slide_data.get("right_title", "After"),
+                    left_points=slide_data.get("left_points", []),
+                    right_points=slide_data.get("right_points", []),
+                )
+            elif slide_type == "before_after":
+                self.add_comparison(
+                    title=slide_data.get("title", ""),
+                    left_title=slide_data.get("left_title", "Before"),
+                    right_title=slide_data.get("right_title", "After"),
+                    left_points=slide_data.get("left_points", []),
+                    right_points=slide_data.get("right_points", []),
+                )
+            elif slide_type == "roadmap":
+                self.add_roadmap(
+                    title=slide_data.get("title", ""),
+                    phases=slide_data.get("phases", []),
+                )
+            elif slide_type == "process":
+                self.add_process(
+                    title=slide_data.get("title", ""),
+                    steps=slide_data.get("steps", []),
+                )
+            elif slide_type == "timeline":
+                self.add_timeline(
+                    title=slide_data.get("title", ""),
+                    milestones=slide_data.get("milestones", []),
+                )
+            elif slide_type == "image":
+                self.add_image_placeholder(
+                    title=slide_data.get("title", ""),
+                    description=slide_data.get("description", ""),
+                )
+
+        # 结尾
+        ending = story_data.get("ending", {})
+        self.add_ending(
+            thank_text=ending.get("thank_text", "感谢聆听"),
+            summary=ending.get("summary", ""),
+            call_to_action=ending.get("call_to_action", ""),
+            contact=ending.get("contact", ""),
+        )
 
         return self
 
