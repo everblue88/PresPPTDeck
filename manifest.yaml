@@ -1,6 +1,6 @@
 name: PresPPTDeck
-version: 0.2.0
-description: AI职场汇报顾问 — 通过12步方法论，从业务理解到汇报交付的完整闭环
+version: 0.3.0
+description: AI商业汇报架构师 — From scattered ideas → Structured Story → Professional Deck
 
 category:
   - productivity
@@ -9,36 +9,68 @@ category:
   - ai-skill
 
 capabilities:
-  - business_analysis        # 业务分析：理解汇报对象、目的、关注点
-  - logical_framework        # 逻辑构建：WHY→WHAT→HOW→RESULT→NEXT故事线
-  - presentation_design      # 视觉设计：配色、字体、图标、布局
-  - visual_modeling          # 视觉模型：金字塔、流程图、Dashboard等12种
-  - ppt_generation           # PPT生成：python-pptx代码生成器
-  - presentation_coaching    # 汇报演练：演讲稿、Q&A准备、技巧指导
+  - intelligent_discovery      # 智能发现：3问最小必要信息采集
+  - content_expansion          # ★ 内容补全：AI主动补充行业背景/市场数据/竞争案例/价值逻辑
+  - story_architect            # 故事构建：Executive Story Framework（6段式）
+  - story_approval             # ★ 汇报框架确认：三级信息结构输出 + 用户确认节点
+  - slide_type_recognition     # 页面识别：自动判断最佳视觉模式
+  - pattern_library            # 模式库：15种PPT页面表达模式
+  - visual_scoring             # 视觉评分：Page Score 100分制自动评分
+  - quality_assurance          # 质量保障：覆盖率≥60%、≤4 Bullet、评分≥80
+  - ppt_generation             # PPT生成：python-pptx代码生成器
+  - presentation_coaching      # 汇报演练：演讲稿、Q&A准备
 
 workflow:
-  - discover                 # 第一阶段：业务理解（Step 1-3）
-  - framework                # 第二阶段：逻辑构建（Step 4-5）
-  - visualize                # 第三阶段：视觉设计（Step 6-8）
-  - deliver                  # 第四阶段：制作交付（Step 9-12）
+  - think                      # 第一阶段：帮用户想清楚（Discovery + Expansion + Architect）
+  - confirm                    # 第二阶段：和用户确认讲什么（Story Approval）★
+  - create                     # 第三阶段：帮用户表达出来（Pattern + Visual + Generator + Quality）
 
-templates:
-  - annual_review            # 年度述职模板
-  - product_strategy         # 产品策略模板
-  - project_report           # 项目汇报模板
-  - proposal                 # 方案评审模板
-  - strategic_planning       # 战略规划模板
+core_modules:
+  - core/discovery.md
+  - core/content_expansion.md
+  - core/story_architect.md
+  - core/story_approval.md
+
+design_modules:
+  - design/style_system.md
+  - design/visual_rules.md
+  - design/pattern_library/
+
+quality_modules:
+  - quality/presentation_checker.md
 
 design_styles:
-  - tech_blue                # 科技蓝白
-  - finance_gold             # 金融黑金
-  - minimal_white            # 极简白灰
-  - dark_tech                # 深色科技
-  - vibrant_orange           # 活力橙红
+  - tech_blue                  # 科技蓝白
+  - finance_gold               # 金融黑金
+  - minimal_white              # 极简白灰
+  - dark_tech                  # 深色科技
+  - vibrant_orange             # 活力橙红
+
+patterns:
+  - cover
+  - summary
+  - framework
+  - timeline
+  - roadmap
+  - comparison
+  - before_after
+  - dashboard
+  - matrix
+  - pyramid
+  - flywheel
+  - case_card
+  - process
+  - organization
+  - architecture
+
+templates:
+  - annual_review              # 年度述职
+  - product_strategy           # 产品策略
+  - project_report             # 项目汇报
+  - proposal                   # 方案评审
+  - strategic_planning         # 战略规划
 
 output_formats:
   - markdown
   - pptx
   - html
-  - png
-  - pdf

@@ -1,5 +1,78 @@
 # Changelog
 
+## v0.3.0 (2025-08-07)
+
+### 定位升级：从"AI PPT生成器"到"AI商业汇报架构师"
+
+**核心理念变化：** AI负责理解20%，补全80%。用户只需要提供最核心的信息，其余由AI结合行业经验、案例和最佳实践完成。
+
+**工作流升级：** 4阶段引擎 → 3阶段引擎（THINK → CONFIRM → CREATE）
+
+### ★ Story Approval — 汇报框架确认（V0.3.0 关键节点）
+
+- 新增 `core/story_approval.md`：强制内容确认节点
+- 三级信息结构输出：Title（我要讲什么？）+ Subtitle（从什么角度讲？）+ Logic（想让听众记住什么？）
+- 3个确认指令：确认/调整/重新生成
+- 调整规则：只修改受影响页面，不推翻整个框架
+- 硬规则：未经用户确认的 Story Framework，不得直接进入最终 PPT 生成
+
+### 新增核心引擎（core/）
+- `core/discovery.md`：3问发现模块
+- `core/content_expansion.md`：★ AI主动补全引擎
+- `core/story_architect.md`：Executive Story Framework + Slide Type Recognition
+- `core/story_approval.md`：★ Story Approval 汇报框架确认
+
+### 新增设计系统（design/）
+- `design/style_system.md`：5种设计风格 + 自动匹配
+- `design/visual_rules.md`：★ 视觉评分规则
+- `design/pattern_library/`：★ 15种版式模式
+
+### 新增质量保障（quality/）
+- `quality/presentation_checker.md`：自动质量检查
+
+### 顶层重构
+- 重写 `SKILL.md`：THINK → CONFIRM → CREATE 3阶段引擎
+- 产品定义：**"From scattered ideas → Structured Story → Professional Deck"**
+- 更新 `manifest.yaml`：新增 story_approval capability
+- 更新 `README.md`
+- 新增最简输入案例 `examples/minimal_input_case.md`
+
+### 删除旧文件
+- 删除 `prompts/`（12个文件）、`assets/`、`framework/`
+
+### 核心数据
+- 23个新建文件 + 9个修改文件 + 17个删除文件
+
+**新增核心引擎（core/）：**
+- `core/discovery.md`：3问发现模块，只采集最少必要信息（对象、目的、想法），其余全部AI推断
+- `core/content_expansion.md`：★ 最大差异化 — AI主动补全引擎，6个补全维度（行业背景/市场数据/竞争案例/最佳实践/价值逻辑/风险预判）
+- `core/story_architect.md`：Executive Story Framework（6段式）+ Slide Type Recognition（自动页面类型识别）+ Slide Planner（页面规划）
+
+**新增设计系统（design/）：**
+- `design/style_system.md`：5种设计风格（从 assets/ 进化），新增自动风格匹配规则
+- `design/visual_rules.md`：★ 视觉评分规则 — 覆盖率≥60%、≤4 Bullet 自动转换、Page Score 100分制
+- `design/pattern_library/`：★ 15种版式模式（cover/summary/framework/timeline/roadmap/comparison/before_after/dashboard/matrix/pyramid/flywheel/case_card/process/organization/architecture）
+
+**新增质量保障（quality/）：**
+- `quality/presentation_checker.md`：自动质量检查，全局评分 + 逐页Page Score + 改进建议
+
+**顶层重构：**
+- 重写 `SKILL.md`：从200+行12步流程 → 4阶段引擎驱动（Discover→Expand→Architect→Deliver）
+- 更新 `manifest.yaml`：新增 content_expansion、slide_type_recognition、pattern_library、visual_scoring、quality_assurance 等能力
+- 重写 `README.md`：突出新定位和新能力
+- 新增开场白：从"先告诉我谁看"→"告诉我你的想法，剩下的我来补全"
+
+**删除旧文件：**
+- 删除 `prompts/`（12个文件）：内容迁移至 core/
+- 删除 `assets/`：内容迁移至 design/
+- 删除 `framework/`：内容迁移至 core/
+
+**核心数据：**
+- 22个新建文件 + 7个修改文件 + 17个删除文件
+- 总新增约3,500行
+
+---
+
 ## v0.2.0 (2025-08-05)
 
 ### 重大升级：从骨架到生产级AI职场汇报Skill

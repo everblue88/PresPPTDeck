@@ -618,3 +618,220 @@ class EndingSlide(SlideTemplate):
                 contact, font_size=Pt(14), font_color_key=contact_color,
                 alignment=PP_ALIGN.CENTER
             )
+
+
+# ============================================================
+# V0.3 新增：Roadmap、Process、Timeline 页面模板
+# ============================================================
+
+class RoadmapSlide(SlideTemplate):
+    """路线图页：分阶段规划"""
+
+    def create(self, slide, title: str, phases: list = None,
+               style_name: str = "tech_blue"):
+        """
+        phases: [{"name": "Phase 1", "time": "H1 2026", "goals": ["目标1", "目标2"]}, ...]
+        """
+        is_dark = style_name in ("dark_tech", "finance_gold")
+        bg_key = "primary" if is_dark else "bg_white"
+        self._set_slide_bg(slide, bg_key)
+
+        accent_color = "bright_blue" if style_name == "dark_tech" else \
+                       "gold" if style_name == "finance_gold" else "primary"
+        self._add_rect(slide, Inches(0), Inches(0), SLIDE_WIDTH, Inches(0.04),
+                       fill_color_key=accent_color)
+
+        title_color = "text_white" if is_dark else "text_black"
+        self._add_text_box(
+            slide, MARGIN_LEFT, Inches(0.4), CONTENT_WIDTH, Inches(0.8),
+            title, font_size=Pt(28), font_color_key=title_color, bold=True
+        )
+
+        if not phases:
+            return
+
+        num_phases = len(phases)
+        phase_height = Inches(1.6)
+        total_height = phase_height * num_phases + Inches(0.3) * (num_phases - 1)
+        start_y = Inches(2.2)
+
+        for i, phase in enumerate(phases):
+            y = start_y + (phase_height + Inches(0.3)) * i
+            card_bg = "card_bg" if is_dark else "light_gray"
+            self._add_rect(slide, MARGIN_LEFT, y, CONTENT_WIDTH, phase_height,
+                           fill_color_key=card_bg)
+
+            # 阶段编号和时间
+            self._add_text_box(
+                slide, MARGIN_LEFT + Inches(0.3), y + Inches(0.15), Inches(2.5), Inches(0.4),
+                f"{phase['name']}  |  {phase['time']}",
+                font_size=Pt(14), font_color_key=accent_color, bold=True
+            )
+
+            # 目标
+            goals_text = "\n".join([f"• {g}" for g in phase.get("goals", [])])
+            text_color = "text_white" if is_dark else "text_black"
+            self._add_text_box(
+                slide, MARGIN_LEFT + Inches(0.3), y + Inches(0.6),
+                CONTENT_WIDTH - Inches(0.6), Inches(0.8),
+                goals_text, font_size=Pt(13), font_color_key=text_color
+            )
+
+            # 箭头（除最后一个）
+            if i < num_phases - 1:
+                arrow_y = y + phase_height
+                self._add_text_box(
+                    slide, MARGIN_LEFT + Inches(0.5), arrow_y, Inches(0.5), Inches(0.3),
+                    "↓", font_size=Pt(18), font_color_key=accent_color, bold=True,
+                    alignment=PP_ALIGN.CENTER
+                )
+
+
+class ProcessSlide(SlideTemplate):
+    """流程图页：步骤/流程展示"""
+
+    def create(self, slide, title: str, steps: list = None,
+               style_name: str = "tech_blue"):
+        """
+        steps: [{"name": "步骤名", "desc": "说明"}, ...]
+        """
+        is_dark = style_name in ("dark_tech", "finance_gold")
+        bg_key = "primary" if is_dark else "bg_white"
+        self._set_slide_bg(slide, bg_key)
+
+        accent_color = "bright_blue" if style_name == "dark_tech" else \
+                       "gold" if style_name == "finance_gold" else "primary"
+        self._add_rect(slide, Inches(0), Inches(0), SLIDE_WIDTH, Inches(0.04),
+                       fill_color_key=accent_color)
+
+        title_color = "text_white" if is_dark else "text_black"
+        self._add_text_box(
+            slide, MARGIN_LEFT, Inches(0.4), CONTENT_WIDTH, Inches(0.8),
+            title, font_size=Pt(28), font_color_key=title_color, bold=True
+        )
+
+        if not steps:
+            return
+
+        num_steps = len(steps)
+        step_width = Inches(2.0)
+        arrow_width = Inches(0.5)
+        total_width = step_width * num_steps + arrow_width * (num_steps - 1)
+        start_x = (SLIDE_WIDTH - total_width) / 2
+        top = Inches(2.5)
+
+        for i, step in enumerate(steps):
+            x = start_x + (step_width + arrow_width) * i
+
+            # 步骤框
+            card_bg = "card_bg" if is_dark else "light_gray"
+            self._add_rect(slide, x, top, step_width, Inches(1.5),
+                           fill_color_key=card_bg)
+
+            # 步骤序号
+            self._add_text_box(
+                slide, x + Inches(0.15), top + Inches(0.1), Inches(0.5), Inches(0.4),
+                f"0{i + 1}", font_size=Pt(20), font_color_key=accent_color, bold=True
+            )
+
+            # 步骤名称
+            text_color = "text_white" if is_dark else "text_black"
+            self._add_text_box(
+                slide, x + Inches(0.15), top + Inches(0.5), step_width - Inches(0.3), Inches(0.4),
+                step["name"], font_size=Pt(14), font_color_key=text_color, bold=True
+            )
+
+            # 步骤说明
+            if step.get("desc"):
+                desc_color = "text_gray" if is_dark else "text_gray"
+                self._add_text_box(
+                    slide, x + Inches(0.15), top + Inches(0.9), step_width - Inches(0.3), Inches(0.5),
+                    step["desc"], font_size=Pt(11), font_color_key=desc_color
+                )
+
+            # 箭头
+            if i < num_steps - 1:
+                arrow_x = x + step_width
+                self._add_text_box(
+                    slide, arrow_x, top + Inches(0.45), arrow_width, Inches(0.4),
+                    "→", font_size=Pt(20), font_color_key=accent_color, bold=True,
+                    alignment=PP_ALIGN.CENTER
+                )
+
+
+class TimelineSlide(SlideTemplate):
+    """时间轴页：里程碑展示"""
+
+    def create(self, slide, title: str, milestones: list = None,
+               style_name: str = "tech_blue"):
+        """
+        milestones: [{"time": "Q1", "event": "事件名", "desc": "说明"}, ...]
+        """
+        is_dark = style_name in ("dark_tech", "finance_gold")
+        bg_key = "primary" if is_dark else "bg_white"
+        self._set_slide_bg(slide, bg_key)
+
+        accent_color = "bright_blue" if style_name == "dark_tech" else \
+                       "gold" if style_name == "finance_gold" else "primary"
+        self._add_rect(slide, Inches(0), Inches(0), SLIDE_WIDTH, Inches(0.04),
+                       fill_color_key=accent_color)
+
+        title_color = "text_white" if is_dark else "text_black"
+        self._add_text_box(
+            slide, MARGIN_LEFT, Inches(0.4), CONTENT_WIDTH, Inches(0.8),
+            title, font_size=Pt(28), font_color_key=title_color, bold=True
+        )
+
+        if not milestones:
+            return
+
+        # 时间轴线
+        line_y = Inches(4.0)
+        line_color = "card_bg" if is_dark else "divider"
+        self._add_rect(slide, MARGIN_LEFT, line_y, CONTENT_WIDTH, Inches(0.03),
+                       fill_color_key=line_color)
+
+        num_milestones = len(milestones)
+        spacing = CONTENT_WIDTH / (num_milestones - 1) if num_milestones > 1 else Inches(0)
+
+        for i, ms in enumerate(milestones):
+            x = MARGIN_LEFT + spacing * i if num_milestones > 1 else MARGIN_LEFT + CONTENT_WIDTH / 2
+
+            # 节点圆点
+            dot_size = Inches(0.2)
+            try:
+                from pptx.enum.shapes import MSO_SHAPE
+                shape = slide.shapes.add_shape(
+                    MSO_SHAPE.OVAL,
+                    x - dot_size / 2, line_y - dot_size / 2,
+                    dot_size, dot_size
+                )
+                shape.fill.solid()
+                shape.fill.fore_color.rgb = self._color(accent_color)
+                shape.line.fill.background()
+            except Exception:
+                pass
+
+            # 时间
+            self._add_text_box(
+                slide, x - Inches(0.6), line_y - Inches(0.7), Inches(1.2), Inches(0.4),
+                ms["time"], font_size=Pt(14), font_color_key=accent_color, bold=True,
+                alignment=PP_ALIGN.CENTER
+            )
+
+            # 事件
+            text_color = "text_white" if is_dark else "text_black"
+            self._add_text_box(
+                slide, x - Inches(0.8), line_y - Inches(0.35), Inches(1.6), Inches(0.4),
+                ms["event"], font_size=Pt(13), font_color_key=text_color, bold=True,
+                alignment=PP_ALIGN.CENTER
+            )
+
+            # 说明
+            if ms.get("desc"):
+                desc_color = "text_gray" if is_dark else "text_gray"
+                self._add_text_box(
+                    slide, x - Inches(0.7), line_y + Inches(0.3), Inches(1.4), Inches(0.6),
+                    ms["desc"], font_size=Pt(11), font_color_key=desc_color,
+                    alignment=PP_ALIGN.CENTER
+                )
