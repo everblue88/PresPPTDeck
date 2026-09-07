@@ -1,5 +1,38 @@
 # Changelog
 
+## v0.4.0 (2026-09-07)
+
+### 架构级重构：从"单一大 Prompt"到"1+4 多 Agent 系统"
+
+**核心变化：** 旧的 15 条规则大 Prompt 拆解为 1 个全局宪法 + 4 个职责完全不同的 Agent，由 12 步编排工作流调度。
+
+**新增 constitition/：**
+- `constitution/GLOBAL_CONSTITUTION.md`：10 条全局规则（薄），所有 Agent 共同遵守
+
+**新增 agents/（4 个独立 Agent，职责严格分离）：**
+- `agents/01_LOGIC_ARCHITECT.md`：讲什么 → Storyline（Engagement Manager 角色，不设计视觉）
+- `agents/02_CONTENT_STRATEGIST.md`：凭什么 → Evidence（Research Lead 角色，不改 Storyline）
+- `agents/03_VISUAL_DESIGNER.md`：怎么画 → Layout/Visual（Presentation Designer 角色，不改变结论）
+- `agents/04_PARTNER_QA.md`：能否交付 → PASS/REWORK（Partner 角色，只否决不生产）
+
+**新增 framework/：**
+- `framework/12STEP_WORKFLOW.md`：12 步从"超级 Prompt"降级为"编排工作流"
+
+**顶层重构：**
+- 重写 `SKILL.md`：从"15条规则大 Prompt"改为"1+4 架构调度入口"
+- 新增用户确认闸门（Logic+Content 输出 Blueprint → 用户确认 → 才进入 Visual）
+- 新增 REWORK 精确回退机制（逻辑问题→Logic，证据问题→Content，视觉问题→Visual）
+
+**目录重组：**
+- `patterns/`：从 design/pattern_library 迁移 + 重命名（summary→executive-summary，flywheel→closed-loop，organization→governance-model）+ 新增 7 个（capability-map/decision-matrix/issue-tree/funnel/layer/operating-model/evidence-chain）
+- `visual/`：从 design/style_system + visual_rules 拆分为 5 个（color/typography/grid/icon/diagram-rules）
+- `qa/`：从 quality/ 拆分为 4 个 checklist（logic/content/visual/partner-review）
+
+**删除旧目录：**
+- 删除 `core/`、`design/`、`quality/`（内容全部迁移）
+
+---
+
 ## v0.3.0 (2025-08-07)
 
 ### 定位升级：从"AI PPT生成器"到"AI商业汇报架构师"
