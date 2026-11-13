@@ -1,3 +1,10 @@
+# 变更记录
+
+## v2：咨询式 PPT 内容策划
+
+- 根目录采用 Codex 可加载的 SKILL.md 和 references/ 结构。
+- 旧版生成器与模板移出 main，历史提交保留。
+
 # Changelog
 
 ## v0.3.0 (2025-08-07)
