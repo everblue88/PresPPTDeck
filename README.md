@@ -85,3 +85,7 @@ python -m generator.ppt_generator
 - **v0.3.0** — AI商业汇报架构师：THINK→CONFIRM→CREATE 3阶段引擎，Story Approval 强制节点
 - **v0.2.0** — 完整12步方法论、PPT生成器
 - **v0.1.0** — 初始版本
+
+## 咨询式 PPT 内容策划 v2
+
+[查看独立 Skill](consulting-ppt-content-v2/SKILL.md)。将整个 `consulting-ppt-content-v2` 文件夹复制到 Codex 的 skills 目录，保留 `references/`，然后在任务中调用 `$consulting-ppt-content-v2`。适合把业务资料转成逐页内容、证据说明和制作提示词；生成 PPT 文件需另用演示文稿工具。
